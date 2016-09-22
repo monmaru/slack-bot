@@ -20,11 +20,11 @@ var bot = controller.spawn({
 
         var LF = '\n';
         for(var i = 0; i < repos.length; i++) {
-          var message = '■' + repos[i].title + LF
-                      + repos[i].url + LF
-                      + repos[i].description + LF
-                      + repos[i].star + LF
-                      + '------------------------------------' + LF;
+          var messageBody = '■' + repos[i].title + LF
+                          + repos[i].url + LF
+                          + repos[i].description + LF
+                          + repos[i].star + LF
+                          + '------------------------------------' + LF;
           bot.say({
             channel: 'general',
             text: messageBody,
@@ -39,6 +39,6 @@ var bot = controller.spawn({
   });
 });
 
-controller.hears(["こんにちわ"],["direct_message","direct_mention","mention"], function(bot, message) {
+controller.hears(["こんにちわ"], ["direct_message", "direct_mention", "mention"], function(bot, message) {
   bot.reply(message, 'こんにちわ');
 });

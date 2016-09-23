@@ -27,12 +27,12 @@ var bot = controller.spawn({
               'title': repo.title,
               "title_link": repo.url,
               'text': repo.description + LF + repo.star,
-              'color': '#7CD197'
+              'color': '#F35A00'
             });
           })
 
           bot.say({
-            'channel': '#general',
+            'channel': '#github',
             'username': 'github_bot',
             'text': 'Trending in ' + lang,
             'attachments': attachments,

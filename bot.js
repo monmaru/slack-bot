@@ -10,35 +10,42 @@ var bot = controller.spawn({
   }
   
   new CronJob({
-    cronTime: '00 00 19 * * 0-6',
+    cronTime: '00 00 16 * * 0-6',
     onTick: function() {
-      trending('C#', function(err, repos) {
-        if (err) {
-          console.log(err);
-          throw new Error('Could not acces to Github');
-        }
+      ['C#', 'Python', 'Go'].forEach(function(lang) {
+        trending(lang, function(err, repos) {
+          if (err) {
+            console.log(err);
+            throw new Error('Could not acces to Github');
+          }
+          
+          var attachments = []
+          repos.forEach(function(repo) {
+            var LF = '\n';
+            attachments.push({
+              'fallback': repo.url,
+              'title': repo.title,
+              "title_link": repo.url,
+              'text': repo.description + LF + repo.star,
+              'color': '#7CD197'
+            });
+          })
 
-        var LF = '\n';
-        for(var i = 0; i < repos.length; i++) {
-          var messageBody = '■' + repos[i].title + LF
-                          + repos[i].url + LF
-                          + repos[i].description + LF
-                          + repos[i].star + LF
-                          + '------------------------------------' + LF;
           bot.say({
-            channel: 'general',
-            text: messageBody,
-            username: 'github_bot',
-            icon_url: ''
+            'channel': '#general',
+            'username': 'github_bot',
+            'text': 'Trending in ' + lang,
+            'attachments': attachments,
+            'icon_emoji': ':moyai:',
           });
-        }
-      });
+        });
+      })
     },
     start: true,
     timeZone: 'Asia/Tokyo'
   });
 });
 
-controller.hears(["こんにちわ"], ["direct_message", "direct_mention", "mention"], function(bot, message) {
+controller.hears(['こんにちわ'], ['direct_message', 'direct_mention', 'mention'], function(bot, message) {
   bot.reply(message, 'こんにちわ');
 });

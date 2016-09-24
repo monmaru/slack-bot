@@ -12,7 +12,7 @@ var bot = controller.spawn({
   new CronJob({
     cronTime: '00 00 16 * * 0-6',
     onTick: function() {
-      ['C#', 'Python', 'Go'].forEach(function(lang) {
+      ['C#', 'F#', 'Python', 'Go'].forEach(function(lang) {
         trending(lang, function(err, repos) {
           if (err) {
             console.log(err);

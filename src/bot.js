@@ -30,7 +30,10 @@ const bot = controller.spawn({ token: process.env.token }).startRTM((err) => {
   
 });
 
-controller.hears(['こんにちわ'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => bot.reply(message, 'こんにちわ'));
+controller.hears(
+  ['こんにちわ'], ['direct_message', 'direct_mention', 'mention'],
+  (bot, message) => bot.reply(message, 'こんにちわ')
+);
 
 const sayGithubTrend = () => {
   const trend = new Trend();
@@ -60,8 +63,8 @@ const sayGithubTrend = () => {
 
 const sayWeather = () => {
   const weather = new Weather();
-  const city = '140010';// Yokohama
-  weather.fetch(city).then((result) => {
+  const yokohama = '140010';
+  weather.fetch(yokohama).then((result) => {
     const attachments = Array.from(result.forecasts).filter((f) => f.dateLabel !== '明後日').map((f) => {
       const min = f.temperature.min == null ? '' : f.temperature.min.celsius;
       const max = f.temperature.max == null ? '' : f.temperature.max.celsius;

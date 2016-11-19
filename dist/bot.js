@@ -78,8 +78,8 @@ var sayGithubTrend = function sayGithubTrend() {
 
 var sayWeather = function sayWeather() {
   var weather = new _weather2.default();
-  var city = '140010'; // Yokohama
-  weather.fetch(city).then(function (result) {
+  var yokohama = '140010';
+  weather.fetch(yokohama).then(function (result) {
     var attachments = Array.from(result.forecasts).filter(function (f) {
       return f.dateLabel !== '明後日';
     }).map(function (f) {

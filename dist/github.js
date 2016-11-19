@@ -22,9 +22,8 @@ var Trend = function () {
   _createClass(Trend, [{
     key: 'fetch',
     value: function fetch(lang) {
-      return new Promise(function (resolve) {
-        var p = _cheerioHttpcli2.default.fetch('https://github.com/trending', { l: lang });
-        p.then(function (result) {
+      return new Promise(function (resolve, reject) {
+        _cheerioHttpcli2.default.fetch('https://github.com/trending', { l: lang }).then(function (result) {
           var $ = result.$;
           var repos = Array.from($('.repo-list li')).map(function (element) {
             var $elem = $(element);
@@ -42,10 +41,8 @@ var Trend = function () {
           });
 
           resolve(repos);
-        });
-
-        p.catch(function () {
-          return resolve([]);
+        }).catch(function (err) {
+          return reject(err);
         });
       });
     }

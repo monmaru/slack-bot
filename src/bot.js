@@ -22,7 +22,7 @@ const bot = controller.spawn({ token: process.env.token }).startRTM((err) => {
   });
 
   new CronJob({
-    cronTime: '00 00 7 * * 0-6',
+    cronTime: '00 00 6 * * 0-6',
     onTick: sayWeather,
     start: true,
     timeZone: tz
@@ -65,7 +65,7 @@ const sayWeather = () => {
   const weather = new Weather();
   const yokohama = '140010';
   weather.fetch(yokohama).then((result) => {
-    const attachments = Array.from(result.forecasts).filter((f) => f.dateLabel !== '明後日').map((f) => {
+    const attachments = Array.from(result.forecasts).map((f) => {
       const min = f.temperature.min == null ? '' : f.temperature.min.celsius;
       const max = f.temperature.max == null ? '' : f.temperature.max.celsius;
 
@@ -74,7 +74,7 @@ const sayWeather = () => {
         'title': f.telop,
         'text': `${f.date}${LF}最低気温 ${min}${LF}最高気温 ${max}`,
         'image_url': f.image.url,
-        'color': '#F35A00'
+        'color': '#307EB8'
       };
     });
    

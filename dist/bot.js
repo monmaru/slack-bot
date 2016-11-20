@@ -37,7 +37,7 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
   });
 
   new CronJob({
-    cronTime: '00 00 7 * * 0-6',
+    cronTime: '00 00 6 * * 0-6',
     onTick: sayWeather,
     start: true,
     timeZone: tz
@@ -80,9 +80,7 @@ var sayWeather = function sayWeather() {
   var weather = new _weather2.default();
   var yokohama = '140010';
   weather.fetch(yokohama).then(function (result) {
-    var attachments = Array.from(result.forecasts).filter(function (f) {
-      return f.dateLabel !== '明後日';
-    }).map(function (f) {
+    var attachments = Array.from(result.forecasts).map(function (f) {
       var min = f.temperature.min == null ? '' : f.temperature.min.celsius;
       var max = f.temperature.max == null ? '' : f.temperature.max.celsius;
 
@@ -91,7 +89,7 @@ var sayWeather = function sayWeather() {
         'title': f.telop,
         'text': '' + f.date + LF + '\u6700\u4F4E\u6C17\u6E29 ' + min + LF + '\u6700\u9AD8\u6C17\u6E29 ' + max,
         'image_url': f.image.url,
-        'color': '#F35A00'
+        'color': '#307EB8'
       };
     });
 

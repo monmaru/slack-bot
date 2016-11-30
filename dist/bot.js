@@ -37,15 +37,11 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
   });
 
   new CronJob({
-    cronTime: '00 00 6 * * 0-6',
+    cronTime: '00 00 23 * * 0-6',
     onTick: sayWeather,
     start: true,
     timeZone: tz
   });
-});
-
-controller.hears(['こんにちわ'], ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
-  return bot.reply(message, 'こんにちわ');
 });
 
 var sayGithubTrend = function sayGithubTrend() {

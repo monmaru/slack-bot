@@ -37,7 +37,7 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
   });
 
   new CronJob({
-    cronTime: '00 00 23 * * 0-6',
+    cronTime: '00 00 20 * * 0-6',
     onTick: sayWeather,
     start: true,
     timeZone: tz
@@ -46,7 +46,7 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
 
 var sayGithubTrend = function sayGithubTrend() {
   var trend = new _github2.default();
-  var languages = ['C#', 'Go', 'Python'];
+  var languages = ['C#', 'Go', 'Python', 'Rust'];
   languages.forEach(function (lang) {
     trend.fetch(lang).then(function (repos) {
       var attachments = Array.from(repos).map(function (repo) {

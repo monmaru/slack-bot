@@ -16,6 +16,10 @@ var _weather = require('./weather');
 
 var _weather2 = _interopRequireDefault(_weather);
 
+var _oreilly = require('./oreilly');
+
+var _oreilly2 = _interopRequireDefault(_oreilly);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CronJob = _cron2.default.CronJob;
@@ -39,6 +43,13 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
   new CronJob({
     cronTime: '00 00 20 * * 0-6',
     onTick: sayWeather,
+    start: true,
+    timeZone: tz
+  });
+
+  new CronJob({
+    cronTime: '00 00 14 * * 0-6',
+    onTick: sayOreilly,
     start: true,
     timeZone: tz
   });
@@ -93,6 +104,32 @@ var sayWeather = function sayWeather() {
       'channel': '#general',
       'username': 'weather_bot',
       'text': result.title,
+      'attachments': attachments,
+      'icon_emoji': ':earth_asia:'
+    });
+  }).catch(function (err) {
+    return console.log(err);
+  });
+};
+
+var sayOreilly = function sayOreilly() {
+  var oreilly = new _oreilly2.default();
+  oreilly.fetchNewEBooks().then(function (ebooks) {
+    var attachments = ebooks.map(function (ebook) {
+      return {
+        'fallback': ebook.title,
+        'title': ebook.title,
+        'title_link': ebook.link,
+        'text': 'updated at ' + ebook.updated,
+        'image_url': ebook.imageUrl,
+        'color': '#307EB8'
+      };
+    });
+
+    bot.say({
+      'channel': '#general',
+      'username': 'oreilly_bot',
+      'text': 'New oreilly ebooks',
       'attachments': attachments,
       'icon_emoji': ':earth_asia:'
     });

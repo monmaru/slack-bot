@@ -2,6 +2,7 @@ import Botkit from 'botkit';
 import cron from 'cron';
 import Trend from './github';
 import Weather from './weather';
+import Oreilly from './oreilly';
 
 const CronJob = cron.CronJob;
 const controller = Botkit.slackbot();
@@ -27,7 +28,13 @@ const bot = controller.spawn({ token: process.env.token }).startRTM((err) => {
     start: true,
     timeZone: tz
   });
-  
+
+  new CronJob({
+    cronTime: '00 00 14 * * 0-6',
+    onTick: sayOreilly,
+    start: true,
+    timeZone: tz
+  });  
 });
 
 const sayGithubTrend = () => {
@@ -77,6 +84,30 @@ const sayWeather = () => {
       'channel': '#general',
       'username': 'weather_bot',
       'text': result.title,
+      'attachments': attachments,
+      'icon_emoji': ':earth_asia:'
+    });
+  }).catch((err) => console.log(err));
+};
+
+const sayOreilly = () => {
+  const oreilly = new Oreilly();
+  oreilly.fetchNewEBooks().then((ebooks) => {
+    const attachments = ebooks.map((ebook) => {
+      return {
+        'fallback': ebook.title,
+        'title': ebook.title,
+        'title_link': ebook.link,
+        'text': `updated at ${ebook.updated}`,
+        'image_url': ebook.imageUrl,
+        'color': '#307EB8'
+      };
+    });
+   
+    bot.say({
+      'channel': '#general',
+      'username': 'oreilly_bot',
+      'text': 'New oreilly ebooks',
       'attachments': attachments,
       'icon_emoji': ':earth_asia:'
     });

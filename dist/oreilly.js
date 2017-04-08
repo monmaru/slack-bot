@@ -34,12 +34,13 @@ var Oreilly = function () {
       return new Promise(function (resolve, reject) {
         _cheerioHttpcli2.default.fetch(_this.baseURL + 'ebook/new_release.atom').then(function (result) {
           var $ = result.$;
-          var ebooks = Array.from($('feed > entry').map(function (entry) {
+          var ebooks = Array.from($('feed > entry').map(function (i, entry) {
+            var e = $(entry);
             return {
-              title: entry.find('title').text(),
-              link: entry.find('link').attr('href'),
-              imageUrl: entry.find('summary').text().match(/img src=(.*)" class=/)[1],
-              updated: entry.find('updated').text()
+              title: e.find('title').text(),
+              link: e.find('link').attr('href'),
+              imageUrl: e.find('summary').text().match(/img src="(.*)" class=/)[1],
+              updated: e.find('updated').text()
             };
           }));
           resolve(ebooks);

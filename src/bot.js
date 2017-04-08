@@ -30,7 +30,7 @@ const bot = controller.spawn({ token: process.env.token }).startRTM((err) => {
   });
 
   new CronJob({
-    cronTime: '00 00 14 * * 0-6',
+    cronTime: '00 00 10 * * 0',
     onTick: sayOreilly,
     start: true,
     timeZone: tz

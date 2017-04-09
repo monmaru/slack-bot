@@ -92,24 +92,46 @@ const sayWeather = () => {
 
 const sayOreilly = () => {
   const oreilly = new Oreilly();
-  oreilly.fetchNewEBooks().then((ebooks) => {
-    const attachments = ebooks.map((ebook) => {
-      return {
-        'fallback': ebook.title,
-        'title': ebook.title,
-        'title_link': ebook.link,
-        'text': `updated at ${ebook.updated}`,
-        'image_url': ebook.imageUrl,
-        'color': '#307EB8'
-      };
-    });
-   
-    bot.say({
-      'channel': '#general',
-      'username': 'oreilly_bot',
-      'text': 'New oreilly ebooks',
-      'attachments': attachments,
-      'icon_emoji': ':earth_asia:'
-    });
-  }).catch((err) => console.log(err));
+  return Promise.resolve()
+    .then(() => oreilly.fetchBookCatalog())
+    .then((books) => {
+      const attachments = books.map((book) => {
+        return {
+          'fallback': book.title,
+          'title': book.title,
+          'title_link': book.link,
+          'text': `${book.creator}${LF}${book.date}`,
+          'image_url': book.imageUrl,
+          'color': '#C71337'
+        };
+      });
+      bot.say({
+        'channel': '#general',
+        'username': 'oreilly_bot',
+        'text': `O'Reilly Japan New & Upcomming`,
+        'attachments': attachments,
+        'icon_emoji': ':books:'
+      });
+    })
+    .then(() => oreilly.fetchNewEBooks())
+    .then((ebooks) => {
+      const attachments = ebooks.map((ebook) => {
+        return {
+          'fallback': ebook.title,
+          'title': ebook.title,
+          'title_link': ebook.link,
+          'text': ebook.updated,
+          'image_url': ebook.imageUrl,
+          'color': '#C71337'
+        };
+      });
+      bot.say({
+        'channel': '#general',
+        'username': 'oreilly_bot',
+        'text': 'Ebook Store - New Release',
+        'attachments': attachments,
+        'icon_emoji': ':books:'
+      });
+    })
+    .catch((err) => console.log(err));
 };

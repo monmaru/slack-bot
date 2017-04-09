@@ -24,23 +24,40 @@ var Oreilly = function () {
   _createClass(Oreilly, [{
     key: 'fetchBookCatalog',
     value: function fetchBookCatalog() {
-      // TODO `${this.baseURL}catalog/soon.xml`
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _cheerioHttpcli2.default.fetch(_this.baseURL + 'catalog/soon.xml').then(function (result) {
+          var $ = result.$;
+          var books = Array.from($('rdf\\:RDF > item').map(function (i, item) {
+            return {
+              title: $(item).find('title').text(),
+              link: $(item).find('link').text(),
+              imageUrl: $(item).find('content\\:encoded').text().match(/img src="(.*)" /)[1],
+              creator: $(item).find('dc\\:creator').text(),
+              date: $(item).find('dc\\:date').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
+            };
+          }));
+          resolve(books);
+        }).catch(function (err) {
+          return reject(err);
+        });
+      });
     }
   }, {
     key: 'fetchNewEBooks',
     value: function fetchNewEBooks() {
-      var _this = this;
+      var _this2 = this;
 
       return new Promise(function (resolve, reject) {
-        _cheerioHttpcli2.default.fetch(_this.baseURL + 'ebook/new_release.atom').then(function (result) {
+        _cheerioHttpcli2.default.fetch(_this2.baseURL + 'ebook/new_release.atom').then(function (result) {
           var $ = result.$;
           var ebooks = Array.from($('feed > entry').map(function (i, entry) {
-            var e = $(entry);
             return {
-              title: e.find('title').text(),
-              link: e.find('link').attr('href'),
-              imageUrl: e.find('summary').text().match(/img src="(.*)" class=/)[1],
-              updated: e.find('updated').text()
+              title: $(entry).find('title').text(),
+              link: $(entry).find('link').attr('href'),
+              imageUrl: $(entry).find('summary').text().match(/img src="(.*)" class=/)[1],
+              updated: $(entry).find('updated').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
             };
           }));
           resolve(ebooks);

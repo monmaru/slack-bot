@@ -14,5 +14,18 @@ describe('oreilly', () => {
         assert(typeof b.updated === expected);
       });
     });
+
+    it('should be success', async function() {
+      const expected = 'string';
+      const oreilly = new Oreilly();
+      const books = await oreilly.fetchBookCatalog();
+      books.forEach((b) => {
+        assert(typeof b.title === expected);
+        assert(typeof b.link === expected);
+        assert(typeof b.imageUrl === expected);
+        assert(typeof b.creator === expected);
+        assert(typeof b.date === expected);
+      });
+    });
   });
 });

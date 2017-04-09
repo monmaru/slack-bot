@@ -6,20 +6,33 @@ export default class Oreilly {
   }
 
   fetchBookCatalog() {
-    // TODO `${this.baseURL}catalog/soon.xml`
+    return new Promise((resolve, reject) => {
+      client.fetch(`${this.baseURL}catalog/soon.xml`).then((result) => {
+        const $ = result.$;
+        const books = Array.from($('rdf\\:RDF > item').map((i, item) => {
+          return {
+            title: $(item).find('title').text(),
+            link: $(item).find('link').text(),
+            imageUrl: $(item).find('content\\:encoded').text().match(/img src="(.*)" /)[1],
+            creator: $(item).find('dc\\:creator').text(),
+            date: $(item).find('dc\\:date').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
+          };
+        }));
+        resolve(books);
+      }).catch((err) => reject(err));
+    });
   }
 
-  fetchNewEBooks () {
+  fetchNewEBooks() {
     return new Promise((resolve, reject) => {
       client.fetch(`${this.baseURL}ebook/new_release.atom`).then((result) => {
         const $ = result.$;
         const ebooks = Array.from($('feed > entry').map((i, entry) => {
-          const e = $(entry);
           return {
-            title: e.find('title').text(),
-            link: e.find('link').attr('href'),
-            imageUrl: e.find('summary').text().match(/img src="(.*)" class=/)[1],
-            updated: e.find('updated').text()
+            title: $(entry).find('title').text(),
+            link: $(entry).find('link').attr('href'),
+            imageUrl: $(entry).find('summary').text().match(/img src="(.*)" class=/)[1],
+            updated: $(entry).find('updated').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
           };
         }));
         resolve(ebooks);

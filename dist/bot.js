@@ -114,24 +114,45 @@ var sayWeather = function sayWeather() {
 
 var sayOreilly = function sayOreilly() {
   var oreilly = new _oreilly2.default();
-  oreilly.fetchNewEBooks().then(function (ebooks) {
+  return Promise.resolve().then(function () {
+    return oreilly.fetchBookCatalog();
+  }).then(function (books) {
+    var attachments = books.map(function (book) {
+      return {
+        'fallback': book.title,
+        'title': book.title,
+        'title_link': book.link,
+        'text': '' + book.creator + LF + book.date,
+        'image_url': book.imageUrl,
+        'color': '#307EB8'
+      };
+    });
+    bot.say({
+      'channel': '#general',
+      'username': 'oreilly_bot',
+      'text': 'O\'Reilly Japan New & Upcomming',
+      'attachments': attachments,
+      'icon_emoji': ':books:'
+    });
+  }).then(function () {
+    return oreilly.fetchNewEBooks();
+  }).then(function (ebooks) {
     var attachments = ebooks.map(function (ebook) {
       return {
         'fallback': ebook.title,
         'title': ebook.title,
         'title_link': ebook.link,
-        'text': 'updated at ' + ebook.updated,
+        'text': ebook.updated,
         'image_url': ebook.imageUrl,
         'color': '#307EB8'
       };
     });
-
     bot.say({
       'channel': '#general',
       'username': 'oreilly_bot',
-      'text': 'New oreilly ebooks',
+      'text': 'Ebook Store - New Release',
       'attachments': attachments,
-      'icon_emoji': ':earth_asia:'
+      'icon_emoji': ':books:'
     });
   }).catch(function (err) {
     return console.log(err);

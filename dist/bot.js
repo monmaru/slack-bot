@@ -124,7 +124,7 @@ var sayOreilly = function sayOreilly() {
         'title_link': book.link,
         'text': '' + book.creator + LF + book.date,
         'image_url': book.imageUrl,
-        'color': '#307EB8'
+        'color': '#C71337'
       };
     });
     bot.say({
@@ -144,7 +144,7 @@ var sayOreilly = function sayOreilly() {
         'title_link': ebook.link,
         'text': ebook.updated,
         'image_url': ebook.imageUrl,
-        'color': '#307EB8'
+        'color': '#C71337'
       };
     });
     bot.say({

@@ -26,22 +26,16 @@ var Oreilly = function () {
     value: function fetchBookCatalog() {
       var _this = this;
 
-      return new Promise(function (resolve, reject) {
-        _cheerioHttpcli2.default.fetch(_this.baseURL + 'catalog/soon.xml').then(function (result) {
-          var $ = result.$;
-          var books = Array.from($('rdf\\:RDF > item').map(function (i, item) {
-            return {
-              title: $(item).find('title').text(),
-              link: $(item).find('link').text(),
-              imageUrl: $(item).find('content\\:encoded').text().match(/img src="(.*)" /)[1],
-              creator: $(item).find('dc\\:creator').text(),
-              date: $(item).find('dc\\:date').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
-            };
-          }));
-          resolve(books);
-        }).catch(function (err) {
-          return reject(err);
-        });
+      return this.scrape(this.baseURL + 'catalog/soon.xml', function ($) {
+        return Array.from($('rdf\\:RDF > item').map(function (i, item) {
+          return {
+            title: $(item).find('title').text(),
+            link: $(item).find('link').text(),
+            imageUrl: $(item).find('content\\:encoded').text().match(/img src="(.*)" /)[1],
+            creator: $(item).find('dc\\:creator').text(),
+            date: _this.fmtAsDate($(item).find('dc\\:date').text())
+          };
+        }));
       });
     }
   }, {
@@ -49,22 +43,32 @@ var Oreilly = function () {
     value: function fetchNewEBooks() {
       var _this2 = this;
 
+      return this.scrape(this.baseURL + 'ebook/new_release.atom', function ($) {
+        return Array.from($('feed > entry').map(function (i, entry) {
+          return {
+            title: $(entry).find('title').text(),
+            link: $(entry).find('link').attr('href'),
+            imageUrl: $(entry).find('summary').text().match(/img src="(.*)" class=/)[1],
+            updated: _this2.fmtAsDate($(entry).find('updated').text())
+          };
+        }));
+      });
+    }
+  }, {
+    key: 'scrape',
+    value: function scrape(url, fn) {
       return new Promise(function (resolve, reject) {
-        _cheerioHttpcli2.default.fetch(_this2.baseURL + 'ebook/new_release.atom').then(function (result) {
-          var $ = result.$;
-          var ebooks = Array.from($('feed > entry').map(function (i, entry) {
-            return {
-              title: $(entry).find('title').text(),
-              link: $(entry).find('link').attr('href'),
-              imageUrl: $(entry).find('summary').text().match(/img src="(.*)" class=/)[1],
-              updated: $(entry).find('updated').text().replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3')
-            };
-          }));
-          resolve(ebooks);
+        _cheerioHttpcli2.default.fetch(url).then(function (result) {
+          return resolve(fn(result.$));
         }).catch(function (err) {
           return reject(err);
         });
       });
+    }
+  }, {
+    key: 'fmtAsDate',
+    value: function fmtAsDate(str) {
+      return str.replace(/(.*?)-(.*?)-(.*?)T.*/, '$1/$2/$3');
     }
   }]);
 

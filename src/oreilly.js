@@ -29,7 +29,7 @@ export default class Oreilly {
           updated: this.fmtAsDate($(entry).find('updated').text())
         };
       }));
-    })
+    });
   }
 
   scrape(url, fn) {

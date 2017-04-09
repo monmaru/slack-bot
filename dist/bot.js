@@ -122,7 +122,7 @@ var sayOreilly = function sayOreilly() {
         'fallback': book.title,
         'title': book.title,
         'title_link': book.link,
-        'text': '' + book.creator + LF + book.date,
+        'text': '' + book.creator + LF + 'updated at ' + book.date,
         'image_url': book.imageUrl,
         'color': '#C71337'
       };
@@ -130,7 +130,7 @@ var sayOreilly = function sayOreilly() {
     bot.say({
       'channel': '#general',
       'username': 'oreilly_bot',
-      'text': 'O\'Reilly Japan New & Upcomming',
+      'text': 'OReilly Japan New & Upcomming',
       'attachments': attachments,
       'icon_emoji': ':books:'
     });
@@ -142,7 +142,7 @@ var sayOreilly = function sayOreilly() {
         'fallback': ebook.title,
         'title': ebook.title,
         'title_link': ebook.link,
-        'text': ebook.updated,
+        'text': 'updated at ' + ebook.updated,
         'image_url': ebook.imageUrl,
         'color': '#C71337'
       };

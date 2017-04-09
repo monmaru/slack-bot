@@ -87,10 +87,11 @@ var sayWeather = function sayWeather() {
   var weather = new _weather2.default();
   var yokohama = '140010';
   weather.fetch(yokohama).then(function (result) {
-    var attachments = Array.from(result.forecasts).map(function (f) {
+    var attachments = Array.from(result.forecasts).filter(function (f) {
+      return f.temperature.min !== null && f.temperature.max !== null;
+    }).map(function (f) {
       var min = f.temperature.min == null ? '' : f.temperature.min.celsius;
       var max = f.temperature.max == null ? '' : f.temperature.max.celsius;
-
       return {
         'fallback': f.telop,
         'title': f.telop,

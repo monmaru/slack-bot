@@ -67,19 +67,20 @@ const sayWeather = () => {
   const weather = new Weather();
   const yokohama = '140010';
   weather.fetch(yokohama).then((result) => {
-    const attachments = Array.from(result.forecasts).map((f) => {
-      const min = f.temperature.min == null ? '' : f.temperature.min.celsius;
-      const max = f.temperature.max == null ? '' : f.temperature.max.celsius;
+    const attachments = Array.from(result.forecasts)
+      .filter((f) => (f.temperature.min !== null) && (f.temperature.max !== null))
+      .map((f) => {
+        const min = f.temperature.min == null ? '' : f.temperature.min.celsius;
+        const max = f.temperature.max == null ? '' : f.temperature.max.celsius;
+        return {
+          'fallback': f.telop,
+          'title': f.telop,
+          'text': `${f.date}${LF}最低気温 ${min}${LF}最高気温 ${max}`,
+          'image_url': f.image.url,
+          'color': '#307EB8'
+        };
+      });
 
-      return {
-        'fallback': f.telop,
-        'title': f.telop,
-        'text': `${f.date}${LF}最低気温 ${min}${LF}最高気温 ${max}`,
-        'image_url': f.image.url,
-        'color': '#307EB8'
-      };
-    });
-   
     bot.say({
       'channel': '#general',
       'username': 'weather_bot',

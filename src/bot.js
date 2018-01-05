@@ -39,7 +39,7 @@ const bot = controller.spawn({ token: process.env.token }).startRTM((err) => {
 
 const sayGithubTrend = () => {
   const trend = new Trend();
-  const languages = ['C#', 'Go', 'Python', 'Rust'];
+  const languages = ['C#', 'Go', 'Python', 'Kotlin'];
   languages.forEach((lang) => {
     trend.fetch(lang).then((repos) => {
       const attachments = Array.from(repos).map((repo) => {

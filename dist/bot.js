@@ -57,7 +57,7 @@ var bot = controller.spawn({ token: process.env.token }).startRTM(function (err)
 
 var sayGithubTrend = function sayGithubTrend() {
   var trend = new _github2.default();
-  var languages = ['C#', 'Go', 'Python', 'Rust'];
+  var languages = ['C#', 'Go', 'Python', 'Kotlin'];
   languages.forEach(function (lang) {
     trend.fetch(lang).then(function (repos) {
       var attachments = Array.from(repos).map(function (repo) {

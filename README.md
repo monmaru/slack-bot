@@ -1,4 +1,4 @@
-# slack-bot
+# slack-bot [![Build Status](https://travis-ci.org/monmaru/slack-bot.svg?branch=master)](https://travis-ci.org/monmaru/slack-bot)
 
 ## Install
 1. clone this repository

@@ -23,7 +23,7 @@ var Trend = function () {
     key: 'fetch',
     value: function fetch(lang) {
       return new Promise(function (resolve, reject) {
-        _cheerioHttpcli2.default.fetch('https://github.com/trending', { l: lang }).then(function (result) {
+        _cheerioHttpcli2.default.fetch('https://github.com/trending/' + lang).then(function (result) {
           var $ = result.$;
           var repos = Array.from($('.repo-list li')).map(function (element) {
             var $elem = $(element);

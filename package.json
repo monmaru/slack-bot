@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "6.5.0"
+    "node": "9.7.1"
   },
   "scripts": {
     "watch": "babel -w src -d dist",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "^0.4.1",
-    "cheerio-httpcli": "^0.6.9",
+    "cheerio-httpcli": "^0.7.2",
     "cron": "^1.1.1",
     "request": "^2.79.0"
   },

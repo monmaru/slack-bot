@@ -3,7 +3,7 @@ import client from 'cheerio-httpcli';
 export default class Trend {
   fetch(lang) {
     return new Promise((resolve, reject) => {
-      client.fetch('https://github.com/trending', { l: lang }).then((result) => {
+      client.fetch(`https://github.com/trending/${lang}`).then((result) => {
         const $ = result.$;
         const repos = Array.from($('.repo-list li')).map((element) => {
           const $elem = $(element);

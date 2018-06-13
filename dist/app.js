@@ -26,7 +26,6 @@ app.get('/slack/weather', function (req, res) {
 });
 
 app.get('/slack/oreilly', function (req, res) {
-  console.log('test');
   bot.sayOreilly();
   console.log('finished oreilly');
   res.status(200).end();

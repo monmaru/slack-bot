@@ -1,1 +1,1 @@
-module.exports = require('./dist/bot');
+module.exports = require('./dist/app');

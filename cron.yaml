@@ -1,0 +1,13 @@
+cron:
+- description: "notify github-trend"
+  url: /slack/github-trend
+  schedule: every day 18:00
+  timezone: Asia/Tokyo
+- description: "notify weather"
+  url: /slack/weather
+  schedule: every day 20:00
+  timezone: Asia/Tokyo
+- description: "notify oreilly info"
+  url: /slack/oreilly
+  schedule: every sunday 10:00
+  timezone: Asia/Tokyo

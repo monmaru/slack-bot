@@ -26,7 +26,7 @@ export default class Bot {
           };
         });
         
-        this.toSlacck({
+        this.doWebhook({
           'channel': '#github',
           'username': 'github_bot',
           'text': `Trending in ${lang}`,
@@ -55,7 +55,7 @@ export default class Bot {
           };
         });
 
-      this.toSlacck({
+      this.doWebhook({
         'channel': '#general',
         'username': 'weather_bot',
         'text': result.title,
@@ -80,7 +80,7 @@ export default class Bot {
           };
         });
         
-        this.toSlacck({
+        this.doWebhook({
           'channel': '#general',
           'username': 'oreilly_bot',
           'text': 'OReilly Japan New & Upcomming',
@@ -102,7 +102,7 @@ export default class Bot {
             'color': '#C71337'
           };
         });
-        this.toSlacck({
+        this.doWebhook({
           'channel': '#general',
           'username': 'oreilly_bot',
           'text': 'Ebook Store - New Release',
@@ -113,7 +113,7 @@ export default class Bot {
       .catch((err) => console.log(err));
   }
 
-  toSlacck(webhookOptions) {
+  doWebhook(webhookOptions) {
     this.slack.setWebhook(this.webhookUrl);
     this.slack.webhook(webhookOptions, (err, response) => {
       if (err !== null || response.statusCode !== 200) {

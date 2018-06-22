@@ -1,4 +1,10 @@
 runtime: nodejs8
 
+handlers:
+- url: /.*
+  script: auto
+  secure: always
+
 env_variables:
   WEBHOOK_URL: 
+  GITHUB_LANGUAGES: 

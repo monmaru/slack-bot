@@ -10,7 +10,7 @@
     "url": "https://github.com/monmaru/slack-bot.git"
   },
   "scripts": {
-    "deploy": "gcloud app deploy",
+    "deploy": "babel src -d dist && gcloud app deploy",
     "start": "node index.js",
     "watch": "babel -w src -d dist",
     "build": "babel src -d dist",

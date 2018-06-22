@@ -13,7 +13,7 @@ export default class Bot {
 
   sayGithubTrend() {
     const trend = new Trend();
-    const languages = ['C#', 'Go', 'Python', 'Kotlin'];
+    const languages = process.env.GITHUB_LANGUAGES.split('|');
     languages.forEach((lang) => {
       trend.fetch(lang).then((repos) => {
         const attachments = Array.from(repos).map((repo) => {

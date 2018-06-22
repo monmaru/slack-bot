@@ -4,25 +4,25 @@ import Bot from './bot';
 const app = express();
 const bot = new Bot(process.env.WEBHOOK_URL);
 
-app.get('/slack/github-trend', (req, res) => {
+app.get('/slack/github-trend', (_req, res) => {
   bot.sayGithubTrend();
   console.log('finished github-trend');
   res.status(200).end();
 });
 
-app.get('/slack/weather', (req, res) => {
+app.get('/slack/weather', (_req, res) => {
   bot.sayWeather();
   console.log('finished weather');
   res.status(200).end();
 });
 
-app.get('/slack/oreilly', (req, res) => {
+app.get('/slack/oreilly', (_req, res) => {
   bot.sayOreilly();
   console.log('finished oreilly');
   res.status(200).end();
 });
 
-app.get('/ping', (req, res) => {
+app.get('/ping', (_req, res) => {
   res.status(200).send('pong').end();
 });
 

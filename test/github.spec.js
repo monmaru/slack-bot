@@ -1,5 +1,5 @@
 import assert from 'power-assert';
-import Trend from '../src/github';
+import Trend from '../src/service/github';
 
 describe('trend', () => {
   describe('#fetch()', () => {

@@ -1,7 +1,7 @@
 import Slack from 'slack-node';
-import Trend from './github';
-import Weather from './weather';
-import Oreilly from './oreilly';
+import Trend from './service/github';
+import Weather from './service/weather';
+import Oreilly from './service/oreilly';
 
 export default class Bot {
 
@@ -26,18 +26,12 @@ export default class Bot {
           };
         });
         
-        this.slack.setWebhook(this.webhookUrl);
-        this.slack.webhook({
+        this.toSlacck({
           'channel': '#github',
           'username': 'github_bot',
           'text': `Trending in ${lang}`,
           'icon_emoji': ':moyai:',
           'attachments': attachments
-        }, (err, response) => {
-          if (err !== null || response.statusCode !== 200) {
-            console.log(err);
-            console.log(response);
-          }
         });
       }).catch((err) => console.log(err));
     });
@@ -61,18 +55,12 @@ export default class Bot {
           };
         });
 
-      this.slack.setWebhook(this.webhookUrl);
-      this.slack.webhook({
+      this.toSlacck({
         'channel': '#general',
         'username': 'weather_bot',
         'text': result.title,
         'icon_emoji': ':earth_asia:',
         'attachments': attachments
-      }, (err, response) => {
-        if (err !== null || response.statusCode !== 200) {
-          console.log(err);
-          console.log(response);
-        }
       });
     }).catch((err) => console.log(err));
   }
@@ -91,22 +79,18 @@ export default class Bot {
             'color': '#C71337'
           };
         });
-       
-        this.slack.setWebhook(this.webhookUrl);
-        this.slack.webhook({
+        
+        this.toSlacck({
           'channel': '#general',
           'username': 'oreilly_bot',
           'text': 'OReilly Japan New & Upcomming',
           'icon_emoji': ':books:',
           'attachments': attachments
-        }, (err, response) => {
-          if (err !== null || response.statusCode !== 200) {
-            console.log(err);
-            console.log(response);
-          }
         });
       })
-      .then(() => oreilly.fetchNewEBooks())
+      .catch((err) => console.log(err));
+
+    oreilly.fetchNewEBooks()
       .then((ebooks) => {
         const attachments = ebooks.map((ebook) => {
           return {
@@ -118,20 +102,24 @@ export default class Bot {
             'color': '#C71337'
           };
         });
-        this.slack.setWebhook(this.webhookUrl);
-        this.slack.webhook({
+        this.toSlacck({
           'channel': '#general',
           'username': 'oreilly_bot',
           'text': 'Ebook Store - New Release',
           'icon_emoji': ':books:',
           'attachments': attachments
-        }, (err, response) => {
-          if (err !== null || response.statusCode !== 200) {
-            console.log(err);
-            console.log(response);
-          }
         });
       })
       .catch((err) => console.log(err));
+  }
+
+  toSlacck(webhookOptions) {
+    this.slack.setWebhook(this.webhookUrl);
+    this.slack.webhook(webhookOptions, (err, response) => {
+      if (err !== null || response.statusCode !== 200) {
+        console.log(err);
+        console.log(response);
+      }
+    });
   }
 }

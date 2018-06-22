@@ -79,8 +79,7 @@ export default class Bot {
 
   sayOreilly() {
     const oreilly = new Oreilly();
-    return Promise.resolve()
-      .then(() => oreilly.fetchBookCatalog())
+    oreilly.fetchBookCatalog()
       .then((books) => {
         const attachments = books.map((book) => {
           return {

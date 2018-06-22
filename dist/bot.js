@@ -119,9 +119,7 @@ var Bot = function () {
       var _this3 = this;
 
       var oreilly = new _oreilly2.default();
-      return Promise.resolve().then(function () {
-        return oreilly.fetchBookCatalog();
-      }).then(function (books) {
+      oreilly.fetchBookCatalog().then(function (books) {
         var attachments = books.map(function (book) {
           return {
             'fallback': book.title,

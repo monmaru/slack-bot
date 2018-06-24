@@ -6,13 +6,15 @@ const app = express();
 const bot = new Bot(process.env.WEBHOOK_URL);
 
 app.get('/slack/github-trend', async function(_req, res) {
-  await errorHandleAsync(() => bot.sayGithubTrend());
+  const languages = process.env.GITHUB_LANGUAGES.split('|');
+  await errorHandleAsync(() => bot.sayGithubTrend(languages));
   console.log('finished github-trend');
   res.status(200).end();
 });
 
 app.get('/slack/weather', async function(_req, res) {
-  await errorHandleAsync(() => bot.sayWeather());
+  const yokohama = '140010';
+  await errorHandleAsync(() => bot.sayWeather(yokohama));
   console.log('finished weather');
   res.status(200).end();
 });

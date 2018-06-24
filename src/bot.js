@@ -13,9 +13,8 @@ export class Bot {
     this.slack = slack;
   }
 
-  async sayGithubTrend() {
+  async sayGithubTrend(languages) {
     const trend = new Trend();
-    const languages = process.env.GITHUB_LANGUAGES.split('|');
     asyncForEach(languages, async (lang) => {
       const repos = await trend.fetch(lang);
       const attachments = Array.from(repos).map((repo) => {
@@ -38,10 +37,9 @@ export class Bot {
     });
   }
 
-  async sayWeather() {
+  async sayWeather(city) {
     const weather = new Weather();
-    const yokohama = '140010';
-    const result = await weather.fetch(yokohama);
+    const result = await weather.fetch(city);
     const attachments = Array.from(result.forecasts)
       .filter((f) => (f.temperature.min !== null) && (f.temperature.max !== null))
       .map((f) => {

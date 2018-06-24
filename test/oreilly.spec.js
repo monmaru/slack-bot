@@ -1,5 +1,5 @@
 import assert from 'power-assert';
-import Oreilly from '../src/service/oreilly';
+import { Oreilly } from '../src/service/oreilly';
 
 describe('oreilly', () => {
   describe('#fetchNewEBooks()', () => {

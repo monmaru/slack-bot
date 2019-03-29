@@ -3,7 +3,7 @@ export async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
-  
+
 export async function errorHandleAsync(asyncAction) {
   try {
     await asyncAction();
@@ -14,4 +14,3 @@ export async function errorHandleAsync(asyncAction) {
     console.log(`Program is using ${heapUsed} bytes of Heap.`);
   }
 }
-  

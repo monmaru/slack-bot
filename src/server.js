@@ -1,8 +1,10 @@
 import express from 'express';
-import { errorHandleAsync } from './helper';
 import { Bot } from './bot';
+import { errorHandleAsync } from './helper';
 
+const timeout = require('connect-timeout');
 const app = express();
+app.use(timeout(60000));
 const bot = new Bot(process.env.WEBHOOK_URL);
 
 app.get('/slack/github-trend', async function(_req, res) {

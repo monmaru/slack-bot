@@ -1,8 +1,8 @@
 import Slack from 'slack-node';
 import { asyncForEach } from './helper';
 import { Trend } from './service/github';
-import { Weather } from './service/weather';
 import { Oreilly } from './service/oreilly';
+import { Weather } from './service/weather';
 
 const LF = '\n';
 
@@ -26,7 +26,7 @@ export class Bot {
           'color': '#F35A00'
         };
       });
-      
+
       this.doWebhook({
         'channel': '#github',
         'username': 'github_bot',

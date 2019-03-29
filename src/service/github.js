@@ -3,13 +3,13 @@ import { getResponseData } from './axios-wrapper';
 
 export class Trend {
   async fetch(lang) {
-    const data = await getResponseData(`https://github.com/trending/${lang}`);
+    const data = await getResponseData(`https://github.com/trending/${encodeURIComponent(lang)}`);
     const $ = cheerio.load(data);
     return Array.from($('.repo-list li')).map((element) => {
       const $elem = $(element);
       const url = $elem.find('h3 a').attr('href');
       const refs = url.split('/');
-      
+
       return {
         owner: refs[1],
         title: refs[2],

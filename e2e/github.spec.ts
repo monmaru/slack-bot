@@ -9,11 +9,11 @@ describe('trend', () => {
       const service = new TrendService();
       const repos = await service.fetch('javascript');
       repos.forEach(r => {
-        assert(typeof r.title === 'string');
-        assert(typeof r.url === 'string');
-        assert(typeof r.description === 'string');
-        assert(typeof r.language === 'string');
-        assert(typeof r.star === 'string');
+        assert(typeof r.title === 'string' && r.title !== '');
+        assert(typeof r.url === 'string' && r.url !== '');
+        assert(typeof r.description === 'string' && r.description !== '');
+        assert(typeof r.language === 'string' && r.language !== '');
+        assert(typeof r.star === 'string' && r.star !== '');
       });
     });
   });

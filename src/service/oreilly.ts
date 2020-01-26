@@ -56,7 +56,7 @@ export class OreillyService {
           .text(),
         link: $(entry)
           .find('link')
-          .attr('href'),
+          .attr('href')!,
         imageUrl: $(entry)
           .find('summary')
           .text()

@@ -17,7 +17,7 @@ export class TrendService {
     return Array.from($('div.application-main div.Box article.Box-row')).map(element => {
       const $elem = $(element);
       const url = $elem.find('h1 a').attr('href');
-      const refs = url.split('/');
+      const refs = url!.split('/');
 
       return {
         owner: refs[1],

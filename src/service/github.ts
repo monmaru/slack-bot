@@ -24,7 +24,7 @@ export class TrendService {
         title: refs[2],
         url: `https://github.com${url}`,
         description: $elem
-          .find('p.text-gray')
+          .find('p.color-text-secondary')
           .text()
           .trim(),
         language: $elem
@@ -32,7 +32,7 @@ export class TrendService {
           .text()
           .trim(),
         star: $elem
-          .find('a.muted-link')
+          .find('a.Link--muted')
           .first()
           .text()
           .trim(),

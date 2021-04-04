@@ -11,7 +11,7 @@ describe('trend', () => {
       repos.forEach(r => {
         assert(typeof r.title === 'string' && r.title !== '');
         assert(typeof r.url === 'string' && r.url !== '');
-        assert(typeof r.description === 'string' && r.description !== '');
+        assert(typeof r.description === 'string');
         assert(typeof r.language === 'string' && r.language !== '');
         assert(typeof r.star === 'string' && r.star !== '');
       });
